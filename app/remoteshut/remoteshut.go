@@ -2,6 +2,7 @@ package remoteshut
 
 import (
 	"bufio"
+	"encoding/base64"
 	"fmt"
 	"io"
 	"log"
@@ -22,10 +23,10 @@ func Connect(addr, user string) (*Connection, error) {
 	var err error
 	var signer ssh.Signer
 
-	dat, err := os.ReadFile("C:\\dev\\go-web-wol\\privatekey")
-	if err != nil {
-		log.Fatal(err)
-	}
+	// dat, err := os.ReadFile("C:\\dev\\go-web-wol\\privatekey")
+	cert := os.Getenv("PRIVATEKEY")
+
+	dat, err := base64.StdEncoding.DecodeString(cert)
 
 	pKey := []byte(dat)
 
